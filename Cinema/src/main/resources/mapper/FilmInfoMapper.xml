@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qyb.cinema.mapper.FilmInfoMapper" >
+	<resultMap type="FilmInfo" id="FilmInfoMap">
+		<id column="filmid" property="filmid"/>
+		<result column="filmname" property="filmname"/>
+		<result column="actor" property="actor"/>
+		<result column="director" property="director"/>
+		<result column="ticketprice" property="ticketprice"/>
+		<association property="type" column="typeid" javaType="FilmType">
+			<id column="typeid" property="typeid"/>
+			<result column="typename" property="typename"/>
+		</association>
+	</resultMap>
+
+  <select id="getFilmsByFilmBean" parameterType="FilmBean" resultMap="FilmInfoMap">
+  	select * from filminfo fi join filmtype ft on fi.typeid=ft.typeid
+  	<where>
+  		<if test="filmname!=null and filmname !=''">
+  			fi.filmname like '%${filmname}%' 
+  		</if>
+  		<if test="typeid!=null and typeid !=''">
+  			and fi.typeid=#{typeid} 
+  		</if>
+  		<if test="actor!=null and actor !=''">
+  			and fi.actor like '%${actor}%'
+  		</if>
+  		<if test="director!=null and director !=''">
+  			and fi.director like '%${director}%'
+  		</if>
+  		<choose>
+  			<when test="minprice!=null and minprice!='' and maxprice!=null and maxprice!=''">
+  				and fi.ticketprice between #{minprice} and #{maxprice} 
+  			</when>
+  			<when test="minprice!=null and minprice!=''">
+  				and fi.ticketprice > #{minprice}
+  			</when>
+  			<when test="maxprice!=null and maxprice!=''">
+  				and  #{maxprice} > fi.ticketprice
+  			</when>
+  		</choose>
+  	</where>
+  </select>
+  <insert id="addfilm" parameterType="AddBean">
+  	insert into filminfo values(seq_filmInfo.nextval,#{filmname},#{typeid},#{actor},#{director},#{ticketprice})
+  </insert>
+</mapper>
