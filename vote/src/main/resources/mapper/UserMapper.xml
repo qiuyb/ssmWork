@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.vote.mapper.UserMapper" >
+ 	<select id="login1" parameterType="User" resultType="User">
+ 		select * from VoteUser where vuUsername=#{vuusername} and vuPassword=#{vupassword}
+ 	</select>
+ 	
+ 	<select id="login2" parameterType="User" resultType="User">
+ 		select * from VoteUser where vuUsername=#{vuusername} and vuPassword=#{vupassword} and vuStatus=2
+ 	</select>
+ 	
+ 	<insert id="register" parameterType="User">
+ 		insert into VoteUser values (seq_vuId.nextval,#{vuusername},#{vupassword},1,0,#{vuemail})
+ 	</insert>
+ 	
+ 	<select id="find" parameterType="User" resultType="User">
+ 		select * from VoteUser where vuUsername=#{vuusername} and vuPassword=#{vupassword} and vuEmail=#{vuemail}
+ 	</select>
+ 	
+ 	<update id="update" parameterType="string">
+ 		update VoteUser set vuStatus=2 where vuEmail=#{vuemail}
+ 	</update>
+</mapper>
