@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:采用接口方式间接操作时，命名空间值：与映射接口的全限定名一致 -->
+<mapper namespace="com.qyb.tagfavorite.mapper.TagMapper">
+	<!-- 查询所有的Tag -->
+	<select id="findAll" resultType="Tag">
+		select * from Tag
+	</select>
+	
+	<!-- Tag是否存在 -->
+	<select id="isTag" parameterType="string" resultType="Tag">
+		select * from Tag where t_name=#{t_name}
+	</select>
+	
+	<!-- 添加Tag -->
+	<insert id="addTag" parameterType="string">
+		insert into Tag values(seq_Tag_tid.nextval,#{t_name},1)
+	</insert>
+	
+	<!--tag中count加一  -->
+	<update id="addcount" parameterType="string">
+		update Tag set t_count = t_count + 1 where t_name=#{t_name}
+	</update>
+	
+</mapper>

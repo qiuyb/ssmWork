@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+    
+    <constant name="struts.objectFactory" value="spring"/>
+    
+    <package name="default" namespace="/" extends="struts-default">
+   		<action name="*_*" class="{1}Action" method="{2}">
+   			<result name="{2}">{2}.jsp</result>
+   			<result name="List">List.jsp?xian=1</result>
+   			<result name="toyun">List.jsp?xian=2</result>
+   			<result name="add">add.jsp</result>
+   		</action>
+    </package>
+</struts>

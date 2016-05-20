@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:采用接口方式间接操作时，命名空间值：与映射接口的全限定名一致 -->
+<mapper namespace="com.qyb.tagfavorite.mapper.FavoriteMapper">
+	<!-- 查询所有的 Favorite-->
+	<select id="findAll" resultType="Favorite">
+		select * from Favorite
+	</select>
+	
+	<!-- 根据Tag名字查询Favorite -->
+	<select id="findByTname" parameterType="string" resultType="Favorite">
+		select * from Favorite where f_tags like  #{t_name}
+	</select>
+	
+	<!-- 查询没有t_name 的favorite -->
+	<select id="findByTnameNull" resultType="Favorite">
+		select * from Favorite where f_tags  is null
+	</select>
+	
+	<!--添加Favorite -->
+	<insert id="addFavorite" parameterType="Favorite">
+		insert into Favorite values(seq_Favorite_fid.nextval,#{f_label},#{f_url},#{f_tags},#{f_desc})
+	</insert>
+	
+</mapper>
